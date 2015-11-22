@@ -2,9 +2,15 @@
 
 {% block body %}
     <div class="container">
-        <div id="col s12 m6">
+        <div id="col s12 m6 center">
           
-          
+          <h2> Prounounced "inked-in"</h2>
+        
+          <input type="text" id="graphbutton"> <br>
+          <input type="button" class="btn" onclick="window.location='/graph/'+document.getElementById('graphbutton').value" value="Search for something">
+          <br><br><br>
+          <a href="/search">Feeling Brave?</a>
+            
         </div>
     </div>
 {% endblock %}

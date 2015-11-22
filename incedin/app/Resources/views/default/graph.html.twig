@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+  
+
+
+<script type="text/javascript"> 
+  var data1 = [['Index', 'sentiment'],
+  {%for row in dataObject %}
+    
+  [{{loop.index0}}, {{row.sentiment}}],
+    
+  {% endfor %}];
+  
+  var data2 = [
+  {%for row in dataObject %}
+    
+  ['{{row.subreddit}}', {{row.sentiment}}],
+    
+  {% endfor %}];
+  
+</script>
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="/js/chart.js"></script>
+
+
+
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+            <div id="chart_div" style="height: 700px;"></div>
+            
+                  
+            <div id="chart_div2" style="height: 700px;"></div>
+            <div class="input-field responsive-text">
+              
+              <!-- <form action="/search" method="post">
+              <input type="text" name="searchString" value="{%if searchString is defined%} {{searchString}}{%endif %}">
+              
+              <input class="btn" type="submit" value ="Live Dangerously">
+              <form> -->
+              
+              <br>
+              {%if data is defined%}
+              {%endif %}
+            </div>  
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+
