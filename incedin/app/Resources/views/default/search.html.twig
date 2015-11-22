@@ -7,11 +7,12 @@
             <div class="input-field responsive-text">
               
               <form action="/search" method="post">
-              <input type="text" name="searchString" value="{%if searchString is defined%} {{searchString}}{%endif %}">
+              <input type="text" name="searchString" value="SELECT count(*) from sentence">
               
               <input class="btn" type="submit" value ="Live Dangerously">
               <form>
               <h3> Feeling Brave? Run your own query! (Be nice...) </h3>
+              <h4> table: sentence</h4>
               <img src="/img/table.png">
               <br>
               {%if data is defined%}
