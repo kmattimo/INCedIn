@@ -1,26 +1,55 @@
 <?php
-
 // 
 // #Function for sentiment analysis that compares words words in
 // #sentence to words in GoodWords, BadWords and checks for Inverters
 // #like "not" that would invert the meaning of the sentence.
-function compareToDictionary(sentence)
+function doSentence($sentence)
 {
-// def compareToDictionary(sentence, GoodWords, BadWords, inverters):
+  global $goodWordsArray;
+  global $badWordsArray;
+  
+  $inverterWordsArray = array(
+    "not",
+    "never",
+    "no more",
+    "not",
+    "not all",
+    "not either",
+    "won't",
+    "couldn't",
+    "opposite",
+    "counter");
+    
+  $sentence = strtolower($sentence);
+  
+
+  
+  // echo sizeof($goodWordsArray);
 //     #Compare sentence to keywords and keep count of matches
-//     addToGood = 0
-//     addToBad = 0
-//     shouldInvert = 0
-// 
+    $addToGood = 0;
+    $addToBad = 0;
+    $shouldInvert = 0;
+
 //     for good in GoodWords:
 //         if good.lower() in sentence:
 //             addToGood = addToGood + 1
+foreach ($goodWordsArray as $good) {
+  if( strpos( $sentence, strtolower($good)) !== false) {
+      // print("found $good in $sentence \n\n");
+      $addToGood++;
+  }
+}
 // 
 //             #Count Bad words
 //     for bad in BadWords:
 //         if bad.lower() in sentence:
 //             addToBad = addToBad + 1
-//                         
+foreach ($badWordsArray as $bad) {
+  if( strpos( $sentence, strtolower($bad)) !== false) {
+      // print("found $good in $sentence \n\n");
+      $addToBad++;
+  }
+}
 //             #Look for inverters such as not, never, ...
 //     for invert in inverters:
 //         if invert.lower() in sentence:
@@ -30,9 +59,20 @@ function compareToDictionary(sentence)
 //         temp = addToBad
 //         addToBad = addToGood
 //         addToGood = temp
+foreach ($inverterWordsArray  as $inverter) {
+  if( strpos( $sentence, strtolower($inverter)) !== false) {
+      $shouldInvert++;
+  }
+  if ($shouldInvert>0) {
+      $temp = $addToBad;
+      $addToBad = $addToGood;
+      $addToGood = $temp;
+    }     
+  }
+
 //     
-//     return (addToGood,addToBad)
-}
+   return $addToGood - $addToBad;
+ }
 //         
 // 
 // #Build the dictionaries from text files.
@@ -49,14 +89,4 @@ function compareToDictionary(sentence)
 //     for line in ins:
 //         inverters.append(line.rstrip('\n'))
 // 
-// 
-// sentenceString = base64.b64decode(sys.argv[1])
-// lol = compareToDictionary(sentenceString, GoodWords, BadWords, inverters)
-// print lol[0] - lol[1]
-// print sentenceString
-// # print 22
-// 
-function doSentence(string sentence) {
-  
-    return 2;
-}
+?>

@@ -1,8 +1,8 @@
 <?php
 
-$GLOBALS['next_request_header'] = null;
-
-require_once './phpdocumentdb.php';
+include 'goodwords.php';
+include 'badwords.php';
+// require_once './phpdocumentdb.php';
 require_once './params.php';
 // require_once './analyzeshit.php';
 require_once './anal.php';
@@ -29,19 +29,24 @@ if ($handle) {
       // $mysqli->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
         // $sql =  "INSERT INTO sentence (body, score, subreddit, author, jsonID, created_utc, controversiality, ups, downs) VALUES (  )";
         
-        $sentences = explode('. ', $value->body);
-        // var_dump($sentences);
-        
-        foreach ($sentences as $key => $sentence) {
+        if(isset($value->body)) {
+          $sentences = explode('. ', $value->body);
+          // var_dump($sentences);
           
-          $sentimentScore = doSentence($sentence);
+          foreach ($sentences as $key => $sentence) {
+            
+            $sentimentScore = doSentence($sentence);
 
-          $stmt = $mysqli->prepare("INSERT INTO sentence(body, score, subreddit, author, jsonID, created_utc, controversiality, ups, downs, sentiment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
-          // echo $stmt->param_count." parameters\n";
-          // var_dump("is tasldkfj" . $sentence);
+            $stmt = $mysqli->prepare("INSERT INTO sentence(body, score, subreddit, author, jsonID, created_utc, controversiality, ups, downs, sentiment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+            // echo $stmt->param_count." parameters\n";
+            // var_dump("is tasldkfj" . $sentence);
 
-          $stmt->bind_param( 'sdssisdiid', $sentence, $value->score, $value->subreddit, $value->author, $value->id, $value->created_utc, $value->controversiality, $value->ups, $value->downs, $sentimentScore);
-          $stmt->execute();
+            $stmt->bind_param( 'sdssisdiid', $sentence, $value->score, $value->subreddit, $value->author, $value->id, $value->created_utc, $value->controversiality, $value->ups, $value->downs, $sentimentScore);
+            $stmt->execute();
+          }
+        }
+        else {
+          echo "NO  BODY?";
         }
         echo "!";
       }     
