@@ -4,7 +4,9 @@ $GLOBALS['next_request_header'] = null;
 
 require_once './phpdocumentdb.php';
 require_once './params.php';
-require_once './analyzeshit.php';
+// require_once './analyzeshit.php';
+require_once './anal.php';
+
 
 // 
 
