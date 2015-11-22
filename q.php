@@ -17,7 +17,9 @@ if ($mysqli->connect_errno) {
 }
 
 
-$handle = fopen("D:/dump/RC_2015-01/RC_2015-01", "r") or die("Couldn't get handle");
+// $handle = fopen("D:/dump/RC_2015-01/RC_2015-01", "r") or die("Couldn't get handle");
+$handle = fopen("RC_2015-01", "r") or die("Couldn't get handle");
+
 if ($handle) {
     while (!feof($handle)) {
       
